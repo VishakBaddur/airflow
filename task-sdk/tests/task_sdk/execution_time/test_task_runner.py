@@ -6396,7 +6396,7 @@ class TestTaskRunnerCallsCallbacks:
 class TestTriggerDagRunOperator:
     """Tests to verify various aspects of TriggerDagRunOperator"""
 
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run(self, create_runtime_ti, mock_supervisor_comms):
         """Test that TriggerDagRunOperator (with default args) sends the correct message to the Supervisor"""
         from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
@@ -6444,7 +6444,7 @@ class TestTriggerDagRunOperator:
             (False, TaskInstanceState.FAILED),
         ],
     )
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run_conflict(
         self, skip_when_already_exists, expected_state, create_runtime_ti, mock_supervisor_comms
     ):
@@ -6480,7 +6480,7 @@ class TestTriggerDagRunOperator:
         ]
         mock_supervisor_comms.assert_has_calls(expected_calls)
 
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run_surfaces_original_error(self, create_runtime_ti, mock_supervisor_comms):
         """
         When an ``except`` handler in ``run()`` raises, the original exception must be
@@ -6525,7 +6525,7 @@ class TestTriggerDagRunOperator:
             (False, TaskInstanceState.FAILED),
         ],
     )
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run_missing_dag_honours_retries_and_callbacks(
         self, should_retry, expected_state, create_runtime_ti, mock_supervisor_comms
     ):
@@ -6601,7 +6601,7 @@ class TestTriggerDagRunOperator:
             ([DagRunState.SUCCESS], None, DagRunState.FAILED, DagRunState.FAILED),
         ],
     )
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run_wait_for_completion(
         self,
         allowed_states,
@@ -6874,7 +6874,7 @@ class TestTriggerDagRunOperator:
 
         assert state == intermediate_state
 
-    @time_machine.travel("2025-01-01 00:00:00", tick=False)
+    @time_machine.travel("2025-01-01 00:00:00+00:00", tick=False)
     def test_handle_trigger_dag_run_deferred_with_reset_uses_run_id_only(
         self, create_runtime_ti, mock_supervisor_comms
     ):
